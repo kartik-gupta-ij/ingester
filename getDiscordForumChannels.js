@@ -28,10 +28,14 @@ client.once("ready", async () => {
   for (const thread of threads.threads.values()) {
     const messages = await thread.fetchStarterMessage();
 
-    messagesArray.push(`${thread.name}- ${messages.content} `);
+    messagesArray.push({
+      threadId: thread.id,
+      name: thread.name,
+      messages: messages.content,
+    });
   }
 
-    fs.writeFileSync("threads.json", JSON.stringify(messagesArray, null, 2));
+  fs.writeFileSync("threads.json", JSON.stringify(messagesArray, null, 2));
 });
 
 client.login(token);
